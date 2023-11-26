@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="com.cloudempiere.dataextractor.factory.ModelFactoryImpl">
+   <property name="service.ranking" type="Integer" value="0"/>
+   <implementation class="com.cloudempiere.dataextractor.factory.ModelFactoryImpl"/>
+   <service>
+      <provide interface="org.adempiere.base.IModelFactory"/>
+   </service>
+</scr:component>
