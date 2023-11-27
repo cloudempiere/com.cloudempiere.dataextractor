@@ -115,7 +115,7 @@ public class SQLiteExtractor extends SvrProcess {
 		processUI.download(temp);
         
 		 
-        return null;
+        return "success";
 	}
 
 }
