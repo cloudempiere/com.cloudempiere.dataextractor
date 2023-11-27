@@ -21,18 +21,18 @@ import java.sql.Timestamp;
 import org.compiere.model.*;
 import org.compiere.util.KeyNamePair;
 
-/** Generated Interface for AD_BackupSchema_Column
+/** Generated Interface for DEX_Table
  *  @author iDempiere (generated) 
  *  @version Release 10
  */
 @SuppressWarnings("all")
-public interface I_AD_BackupSchema_Column 
+public interface I_DEX_Table 
 {
 
-    /** TableName=AD_BackupSchema_Column */
-    public static final String Table_Name = "AD_BackupSchema_Column";
+    /** TableName=DEX_Table */
+    public static final String Table_Name = "DEX_Table";
 
-    /** AD_Table_ID=1000027 */
+    /** AD_Table_ID=1000031 */
     public static final int Table_ID = MTable.getTable_ID(Table_Name);
 
     KeyNamePair Model = new KeyNamePair(Table_ID, Table_Name);
@@ -43,35 +43,6 @@ public interface I_AD_BackupSchema_Column
 
     /** Load Meta Data */
 
-    /** Column name AD_BackupSchema_Column_ID */
-    public static final String COLUMNNAME_AD_BackupSchema_Column_ID = "AD_BackupSchema_Column_ID";
-
-	/** Set Backup Schema Column	  */
-	public void setAD_BackupSchema_Column_ID (int AD_BackupSchema_Column_ID);
-
-	/** Get Backup Schema Column	  */
-	public int getAD_BackupSchema_Column_ID();
-
-    /** Column name AD_BackupSchema_Column_UU */
-    public static final String COLUMNNAME_AD_BackupSchema_Column_UU = "AD_BackupSchema_Column_UU";
-
-	/** Set AD_BackupSchema_Column_UU	  */
-	public void setAD_BackupSchema_Column_UU (String AD_BackupSchema_Column_UU);
-
-	/** Get AD_BackupSchema_Column_UU	  */
-	public String getAD_BackupSchema_Column_UU();
-
-    /** Column name AD_BackupSchema_Table_ID */
-    public static final String COLUMNNAME_AD_BackupSchema_Table_ID = "AD_BackupSchema_Table_ID";
-
-	/** Set Backup Schema Table	  */
-	public void setAD_BackupSchema_Table_ID (int AD_BackupSchema_Table_ID);
-
-	/** Get Backup Schema Table	  */
-	public int getAD_BackupSchema_Table_ID();
-
-	public I_AD_BackupSchema_Table getAD_BackupSchema_Table() throws RuntimeException;
-
     /** Column name AD_Client_ID */
     public static final String COLUMNNAME_AD_Client_ID = "AD_Client_ID";
 
@@ -79,21 +50,6 @@ public interface I_AD_BackupSchema_Column
 	  * Tenant for this installation.
 	  */
 	public int getAD_Client_ID();
-
-    /** Column name AD_Column_ID */
-    public static final String COLUMNNAME_AD_Column_ID = "AD_Column_ID";
-
-	/** Set Column.
-	  * Column in the table
-	  */
-	public void setAD_Column_ID (int AD_Column_ID);
-
-	/** Get Column.
-	  * Column in the table
-	  */
-	public int getAD_Column_ID();
-
-	public org.compiere.model.I_AD_Column getAD_Column() throws RuntimeException;
 
     /** Column name AD_Org_ID */
     public static final String COLUMNNAME_AD_Org_ID = "AD_Org_ID";
@@ -108,18 +64,20 @@ public interface I_AD_BackupSchema_Column
 	  */
 	public int getAD_Org_ID();
 
-    /** Column name ColumnName */
-    public static final String COLUMNNAME_ColumnName = "ColumnName";
+    /** Column name AD_Table_ID */
+    public static final String COLUMNNAME_AD_Table_ID = "AD_Table_ID";
 
-	/** Set DB Column Name.
-	  * Name of the column in the database
+	/** Set Table.
+	  * Database Table information
 	  */
-	public void setColumnName (String ColumnName);
+	public void setAD_Table_ID (int AD_Table_ID);
 
-	/** Get DB Column Name.
-	  * Name of the column in the database
+	/** Get Table.
+	  * Database Table information
 	  */
-	public String getColumnName();
+	public int getAD_Table_ID();
+
+	public org.compiere.model.I_AD_Table getAD_Table() throws RuntimeException;
 
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
@@ -137,18 +95,34 @@ public interface I_AD_BackupSchema_Column
 	  */
 	public int getCreatedBy();
 
-    /** Column name DataType */
-    public static final String COLUMNNAME_DataType = "DataType";
+    /** Column name DEX_Schema_ID */
+    public static final String COLUMNNAME_DEX_Schema_ID = "DEX_Schema_ID";
 
-	/** Set Data Type.
-	  * Type of data
-	  */
-	public void setDataType (String DataType);
+	/** Set Data Extractor Schema	  */
+	public void setDEX_Schema_ID (int DEX_Schema_ID);
 
-	/** Get Data Type.
-	  * Type of data
-	  */
-	public String getDataType();
+	/** Get Data Extractor Schema	  */
+	public int getDEX_Schema_ID();
+
+	public I_DEX_Schema getDEX_Schema() throws RuntimeException;
+
+    /** Column name DEX_Table_ID */
+    public static final String COLUMNNAME_DEX_Table_ID = "DEX_Table_ID";
+
+	/** Set Data Extractor Table	  */
+	public void setDEX_Table_ID (int DEX_Table_ID);
+
+	/** Get Data Extractor Table	  */
+	public int getDEX_Table_ID();
+
+    /** Column name DEX_Table_UU */
+    public static final String COLUMNNAME_DEX_Table_UU = "DEX_Table_UU";
+
+	/** Set DEX_Table_UU	  */
+	public void setDEX_Table_UU (String DEX_Table_UU);
+
+	/** Get DEX_Table_UU	  */
+	public String getDEX_Table_UU();
 
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";
@@ -162,6 +136,19 @@ public interface I_AD_BackupSchema_Column
 	  * The record is active in the system
 	  */
 	public boolean isActive();
+
+    /** Column name TableName */
+    public static final String COLUMNNAME_TableName = "TableName";
+
+	/** Set DB Table Name.
+	  * Name of the table in the database
+	  */
+	public void setTableName (String TableName);
+
+	/** Get DB Table Name.
+	  * Name of the table in the database
+	  */
+	public String getTableName();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";
@@ -178,4 +165,17 @@ public interface I_AD_BackupSchema_Column
 	  * User who updated this records
 	  */
 	public int getUpdatedBy();
+
+    /** Column name WhereClause */
+    public static final String COLUMNNAME_WhereClause = "WhereClause";
+
+	/** Set Sql WHERE.
+	  * Fully qualified SQL WHERE clause
+	  */
+	public void setWhereClause (String WhereClause);
+
+	/** Get Sql WHERE.
+	  * Fully qualified SQL WHERE clause
+	  */
+	public String getWhereClause();
 }

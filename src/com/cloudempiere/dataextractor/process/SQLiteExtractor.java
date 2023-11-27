@@ -11,27 +11,35 @@ import org.adempiere.base.annotation.Process;
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.PO;
 import org.compiere.model.Query;
+import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
 import org.sqlite.SQLiteDataSource;
 
-import com.cloudempiere.dataextractor.model.MBackupSchema;
-import com.cloudempiere.dataextractor.model.MBackupSchemaColumn;
-import com.cloudempiere.dataextractor.model.MBackupSchemaTable;
+import com.cloudempiere.dataextractor.model.MDEXColumn;
+import com.cloudempiere.dataextractor.model.MDEXSchema;
+import com.cloudempiere.dataextractor.model.MDEXTable;
 
 
 @Process
 public class SQLiteExtractor extends SvrProcess {
 
-	private int p_AD_BackupSchema_ID = 0;
+	private int p_DEX_Schema_ID = 0;
 	
 	@Override
 	protected void prepare() {
-		p_AD_BackupSchema_ID = getRecord_ID();
+		ProcessInfoParameter[] paras = getParameter();
+		for (ProcessInfoParameter para : paras)
+		{
+			String name = para.getParameterName();
+			if ("DEX_Schema_ID".equals(name))
+				p_DEX_Schema_ID = para.getParameterAsInt();
+			
+		}
 	}
 
 	@Override
 	protected String doIt() throws Exception {
-		MBackupSchema schema = new MBackupSchema(getCtx(), p_AD_BackupSchema_ID, get_TrxName());
+		MDEXSchema schema = new MDEXSchema(getCtx(), p_DEX_Schema_ID, get_TrxName());
 		
 		SQLiteDataSource ds = null;
 		File temp = null;
@@ -47,17 +55,22 @@ public class SQLiteExtractor extends SvrProcess {
 
         try {
         
-	        for(MBackupSchemaTable table : schema.getTables()) {
+	        for(MDEXTable table : schema.getTables()) {
 	        	String columnSql = "";
 	        	String columnInsertSql = "";
 	        	ArrayList<String> columns = new ArrayList<String>();
 	        	
-	        	for(MBackupSchemaColumn column : table.getColumns()) {
+	        	for(MDEXColumn column : table.getColumns()) {
 	        		String columnName = column.getColumnName();
 	        		
 	        		if(!columnSql.equals(""))
 	        			columnSql += ",";
-	        		columnSql += columnName+" TEXT NULL";
+	        		
+	        		String type = "TEXT";
+	        		if(column.getDataType().equals(MDEXColumn.DATATYPE_Number))
+	        			type = "NUMERIC";
+	        		
+	        		columnSql += "`" + columnName + "` " + type + " NULL";
 	
 	        		if(!columnInsertSql.equals(""))
 	        			columnInsertSql += ",";
@@ -66,11 +79,11 @@ public class SQLiteExtractor extends SvrProcess {
 	        		columns.add(columnName);
 	        	}
 	        	
-		        String tableSql = "CREATE TABLE IF NOT EXISTS "+table.getName()+" ( " +
+		        String tableSql = "CREATE TABLE IF NOT EXISTS `"+table.getTableName()+"` ( " +
 		        		columnSql +
 		                ")";
 		        
-				String dataSql = "INSERT INTO "+table.getName()+" ( "+columnInsertSql+" ) VALUES ";
+				String dataSql = "INSERT INTO `"+table.getTableName()+"` ( "+columnInsertSql+" ) VALUES ";
 		
 				Connection conn = ds.getConnection();
 				Statement stmt = conn.createStatement();
@@ -83,7 +96,7 @@ public class SQLiteExtractor extends SvrProcess {
 			    for(PO data : list) {
 			
 			    	ArrayList<String> value = new ArrayList<String>();
-			    	for(MBackupSchemaColumn column : table.getColumns()) {
+			    	for(MDEXColumn column : table.getColumns()) {
 			    		value.add(data.get_ValueAsString(column.getAD_Column().getColumnName()));
 			    	}
 			    	

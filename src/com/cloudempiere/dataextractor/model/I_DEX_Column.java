@@ -21,18 +21,18 @@ import java.sql.Timestamp;
 import org.compiere.model.*;
 import org.compiere.util.KeyNamePair;
 
-/** Generated Interface for AD_Data_Backup
+/** Generated Interface for DEX_Column
  *  @author iDempiere (generated) 
  *  @version Release 10
  */
 @SuppressWarnings("all")
-public interface I_AD_Data_Backup 
+public interface I_DEX_Column 
 {
 
-    /** TableName=AD_Data_Backup */
-    public static final String Table_Name = "AD_Data_Backup";
+    /** TableName=DEX_Column */
+    public static final String Table_Name = "DEX_Column";
 
-    /** AD_Table_ID=1000029 */
+    /** AD_Table_ID=1000032 */
     public static final int Table_ID = MTable.getTable_ID(Table_Name);
 
     KeyNamePair Model = new KeyNamePair(Table_ID, Table_Name);
@@ -51,23 +51,20 @@ public interface I_AD_Data_Backup
 	  */
 	public int getAD_Client_ID();
 
-    /** Column name AD_Data_Backup_ID */
-    public static final String COLUMNNAME_AD_Data_Backup_ID = "AD_Data_Backup_ID";
+    /** Column name AD_Column_ID */
+    public static final String COLUMNNAME_AD_Column_ID = "AD_Column_ID";
 
-	/** Set Data Backup	  */
-	public void setAD_Data_Backup_ID (int AD_Data_Backup_ID);
+	/** Set Column.
+	  * Column in the table
+	  */
+	public void setAD_Column_ID (int AD_Column_ID);
 
-	/** Get Data Backup	  */
-	public int getAD_Data_Backup_ID();
+	/** Get Column.
+	  * Column in the table
+	  */
+	public int getAD_Column_ID();
 
-    /** Column name AD_Data_Backup_UU */
-    public static final String COLUMNNAME_AD_Data_Backup_UU = "AD_Data_Backup_UU";
-
-	/** Set AD_Data_Backup_UU	  */
-	public void setAD_Data_Backup_UU (String AD_Data_Backup_UU);
-
-	/** Get AD_Data_Backup_UU	  */
-	public String getAD_Data_Backup_UU();
+	public org.compiere.model.I_AD_Column getAD_Column() throws RuntimeException;
 
     /** Column name AD_Org_ID */
     public static final String COLUMNNAME_AD_Org_ID = "AD_Org_ID";
@@ -82,14 +79,18 @@ public interface I_AD_Data_Backup
 	  */
 	public int getAD_Org_ID();
 
-    /** Column name BackupFrequency */
-    public static final String COLUMNNAME_BackupFrequency = "BackupFrequency";
+    /** Column name ColumnName */
+    public static final String COLUMNNAME_ColumnName = "ColumnName";
 
-	/** Set Backup Frequency	  */
-	public void setBackupFrequency (String BackupFrequency);
+	/** Set DB Column Name.
+	  * Name of the column in the database
+	  */
+	public void setColumnName (String ColumnName);
 
-	/** Get Backup Frequency	  */
-	public String getBackupFrequency();
+	/** Get DB Column Name.
+	  * Name of the column in the database
+	  */
+	public String getColumnName();
 
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
@@ -107,40 +108,47 @@ public interface I_AD_Data_Backup
 	  */
 	public int getCreatedBy();
 
-    /** Column name DataBackupStatus */
-    public static final String COLUMNNAME_DataBackupStatus = "DataBackupStatus";
+    /** Column name DataType */
+    public static final String COLUMNNAME_DataType = "DataType";
 
-	/** Set Data Backup Status	  */
-	public void setDataBackupStatus (String DataBackupStatus);
-
-	/** Get Data Backup Status	  */
-	public String getDataBackupStatus();
-
-    /** Column name Expiration */
-    public static final String COLUMNNAME_Expiration = "Expiration";
-
-	/** Set Expire On.
-	  * Expire On
+	/** Set Data Type.
+	  * Type of data
 	  */
-	public void setExpiration (Timestamp Expiration);
+	public void setDataType (String DataType);
 
-	/** Get Expire On.
-	  * Expire On
+	/** Get Data Type.
+	  * Type of data
 	  */
-	public Timestamp getExpiration();
+	public String getDataType();
 
-    /** Column name FileName */
-    public static final String COLUMNNAME_FileName = "FileName";
+    /** Column name DEX_Column_ID */
+    public static final String COLUMNNAME_DEX_Column_ID = "DEX_Column_ID";
 
-	/** Set File Name.
-	  * Name of the local file or URL
-	  */
-	public void setFileName (String FileName);
+	/** Set Data Extractor Column	  */
+	public void setDEX_Column_ID (int DEX_Column_ID);
 
-	/** Get File Name.
-	  * Name of the local file or URL
-	  */
-	public String getFileName();
+	/** Get Data Extractor Column	  */
+	public int getDEX_Column_ID();
+
+    /** Column name DEX_Column_UU */
+    public static final String COLUMNNAME_DEX_Column_UU = "DEX_Column_UU";
+
+	/** Set DEX_Column_UU	  */
+	public void setDEX_Column_UU (String DEX_Column_UU);
+
+	/** Get DEX_Column_UU	  */
+	public String getDEX_Column_UU();
+
+    /** Column name DEX_Table_ID */
+    public static final String COLUMNNAME_DEX_Table_ID = "DEX_Table_ID";
+
+	/** Set Data Extractor Table	  */
+	public void setDEX_Table_ID (int DEX_Table_ID);
+
+	/** Get Data Extractor Table	  */
+	public int getDEX_Table_ID();
+
+	public I_DEX_Table getDEX_Table() throws RuntimeException;
 
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";
@@ -154,32 +162,6 @@ public interface I_AD_Data_Backup
 	  * The record is active in the system
 	  */
 	public boolean isActive();
-
-    /** Column name LinkURL */
-    public static final String COLUMNNAME_LinkURL = "LinkURL";
-
-	/** Set Link URL.
-	  * Contains URL to a target
-	  */
-	public void setLinkURL (String LinkURL);
-
-	/** Get Link URL.
-	  * Contains URL to a target
-	  */
-	public String getLinkURL();
-
-    /** Column name StartTime */
-    public static final String COLUMNNAME_StartTime = "StartTime";
-
-	/** Set Start Time.
-	  * Time started
-	  */
-	public void setStartTime (Timestamp StartTime);
-
-	/** Get Start Time.
-	  * Time started
-	  */
-	public Timestamp getStartTime();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";
@@ -196,17 +178,4 @@ public interface I_AD_Data_Backup
 	  * User who updated this records
 	  */
 	public int getUpdatedBy();
-
-    /** Column name Value */
-    public static final String COLUMNNAME_Value = "Value";
-
-	/** Set Search Key.
-	  * Search key for the record in the format required - must be unique
-	  */
-	public void setValue (String Value);
-
-	/** Get Search Key.
-	  * Search key for the record in the format required - must be unique
-	  */
-	public String getValue();
 }

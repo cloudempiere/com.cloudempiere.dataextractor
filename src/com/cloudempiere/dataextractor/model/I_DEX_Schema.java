@@ -21,18 +21,18 @@ import java.sql.Timestamp;
 import org.compiere.model.*;
 import org.compiere.util.KeyNamePair;
 
-/** Generated Interface for AD_BackupSchema_Table
+/** Generated Interface for DEX_Schema
  *  @author iDempiere (generated) 
  *  @version Release 10
  */
 @SuppressWarnings("all")
-public interface I_AD_BackupSchema_Table 
+public interface I_DEX_Schema 
 {
 
-    /** TableName=AD_BackupSchema_Table */
-    public static final String Table_Name = "AD_BackupSchema_Table";
+    /** TableName=DEX_Schema */
+    public static final String Table_Name = "DEX_Schema";
 
-    /** AD_Table_ID=1000026 */
+    /** AD_Table_ID=1000030 */
     public static final int Table_ID = MTable.getTable_ID(Table_Name);
 
     KeyNamePair Model = new KeyNamePair(Table_ID, Table_Name);
@@ -42,35 +42,6 @@ public interface I_AD_BackupSchema_Table
     BigDecimal accessLevel = BigDecimal.valueOf(6);
 
     /** Load Meta Data */
-
-    /** Column name AD_BackupSchema_ID */
-    public static final String COLUMNNAME_AD_BackupSchema_ID = "AD_BackupSchema_ID";
-
-	/** Set Backup Schema	  */
-	public void setAD_BackupSchema_ID (int AD_BackupSchema_ID);
-
-	/** Get Backup Schema	  */
-	public int getAD_BackupSchema_ID();
-
-	public I_AD_BackupSchema getAD_BackupSchema() throws RuntimeException;
-
-    /** Column name AD_BackupSchema_Table_ID */
-    public static final String COLUMNNAME_AD_BackupSchema_Table_ID = "AD_BackupSchema_Table_ID";
-
-	/** Set Backup Schema Table	  */
-	public void setAD_BackupSchema_Table_ID (int AD_BackupSchema_Table_ID);
-
-	/** Get Backup Schema Table	  */
-	public int getAD_BackupSchema_Table_ID();
-
-    /** Column name AD_BackupSchema_Table_UU */
-    public static final String COLUMNNAME_AD_BackupSchema_Table_UU = "AD_BackupSchema_Table_UU";
-
-	/** Set AD_BackupSchema_Table_UU	  */
-	public void setAD_BackupSchema_Table_UU (String AD_BackupSchema_Table_UU);
-
-	/** Get AD_BackupSchema_Table_UU	  */
-	public String getAD_BackupSchema_Table_UU();
 
     /** Column name AD_Client_ID */
     public static final String COLUMNNAME_AD_Client_ID = "AD_Client_ID";
@@ -93,21 +64,6 @@ public interface I_AD_BackupSchema_Table
 	  */
 	public int getAD_Org_ID();
 
-    /** Column name AD_Table_ID */
-    public static final String COLUMNNAME_AD_Table_ID = "AD_Table_ID";
-
-	/** Set Table.
-	  * Database Table information
-	  */
-	public void setAD_Table_ID (int AD_Table_ID);
-
-	/** Get Table.
-	  * Database Table information
-	  */
-	public int getAD_Table_ID();
-
-	public org.compiere.model.I_AD_Table getAD_Table() throws RuntimeException;
-
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
 
@@ -123,6 +79,37 @@ public interface I_AD_BackupSchema_Table
 	  * User who created this records
 	  */
 	public int getCreatedBy();
+
+    /** Column name Description */
+    public static final String COLUMNNAME_Description = "Description";
+
+	/** Set Description.
+	  * Optional short description of the record
+	  */
+	public void setDescription (String Description);
+
+	/** Get Description.
+	  * Optional short description of the record
+	  */
+	public String getDescription();
+
+    /** Column name DEX_Schema_ID */
+    public static final String COLUMNNAME_DEX_Schema_ID = "DEX_Schema_ID";
+
+	/** Set Data Extractor Schema	  */
+	public void setDEX_Schema_ID (int DEX_Schema_ID);
+
+	/** Get Data Extractor Schema	  */
+	public int getDEX_Schema_ID();
+
+    /** Column name DEX_Schema_UU */
+    public static final String COLUMNNAME_DEX_Schema_UU = "DEX_Schema_UU";
+
+	/** Set DEX_Schema_UU	  */
+	public void setDEX_Schema_UU (String DEX_Schema_UU);
+
+	/** Get DEX_Schema_UU	  */
+	public String getDEX_Schema_UU();
 
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";
@@ -166,16 +153,16 @@ public interface I_AD_BackupSchema_Table
 	  */
 	public int getUpdatedBy();
 
-    /** Column name WhereClause */
-    public static final String COLUMNNAME_WhereClause = "WhereClause";
+    /** Column name Value */
+    public static final String COLUMNNAME_Value = "Value";
 
-	/** Set Sql WHERE.
-	  * Fully qualified SQL WHERE clause
+	/** Set Search Key.
+	  * Search key for the record in the format required - must be unique
 	  */
-	public void setWhereClause (String WhereClause);
+	public void setValue (String Value);
 
-	/** Get Sql WHERE.
-	  * Fully qualified SQL WHERE clause
+	/** Get Search Key.
+	  * Search key for the record in the format required - must be unique
 	  */
-	public String getWhereClause();
+	public String getValue();
 }

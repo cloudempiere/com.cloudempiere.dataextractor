@@ -21,42 +21,42 @@ import java.sql.ResultSet;
 import java.util.Properties;
 import org.compiere.model.*;
 
-/** Generated Model for AD_BackupSchema
+/** Generated Model for DEX_Schema
  *  @author iDempiere (generated) 
  *  @version Release 10 - $Id$ */
-@org.adempiere.base.Model(table="AD_BackupSchema")
-public class X_AD_BackupSchema extends PO implements I_AD_BackupSchema, I_Persistent 
+@org.adempiere.base.Model(table="DEX_Schema")
+public class X_DEX_Schema extends PO implements I_DEX_Schema, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20231126L;
+	private static final long serialVersionUID = 20231127L;
 
     /** Standard Constructor */
-    public X_AD_BackupSchema (Properties ctx, int AD_BackupSchema_ID, String trxName)
+    public X_DEX_Schema (Properties ctx, int DEX_Schema_ID, String trxName)
     {
-      super (ctx, AD_BackupSchema_ID, trxName);
-      /** if (AD_BackupSchema_ID == 0)
+      super (ctx, DEX_Schema_ID, trxName);
+      /** if (DEX_Schema_ID == 0)
         {
-			setAD_BackupSchema_ID (0);
+			setDEX_Schema_ID (0);
 			setName (null);
         } */
     }
 
     /** Standard Constructor */
-    public X_AD_BackupSchema (Properties ctx, int AD_BackupSchema_ID, String trxName, String ... virtualColumns)
+    public X_DEX_Schema (Properties ctx, int DEX_Schema_ID, String trxName, String ... virtualColumns)
     {
-      super (ctx, AD_BackupSchema_ID, trxName, virtualColumns);
-      /** if (AD_BackupSchema_ID == 0)
+      super (ctx, DEX_Schema_ID, trxName, virtualColumns);
+      /** if (DEX_Schema_ID == 0)
         {
-			setAD_BackupSchema_ID (0);
+			setDEX_Schema_ID (0);
 			setName (null);
         } */
     }
 
     /** Load Constructor */
-    public X_AD_BackupSchema (Properties ctx, ResultSet rs, String trxName)
+    public X_DEX_Schema (Properties ctx, ResultSet rs, String trxName)
     {
       super (ctx, rs, trxName);
     }
@@ -78,46 +78,10 @@ public class X_AD_BackupSchema extends PO implements I_AD_BackupSchema, I_Persis
 
     public String toString()
     {
-      StringBuilder sb = new StringBuilder ("X_AD_BackupSchema[")
+      StringBuilder sb = new StringBuilder ("X_DEX_Schema[")
         .append(get_ID()).append(",Name=").append(getName()).append("]");
       return sb.toString();
     }
-
-	/** Set Backup Schema.
-		@param AD_BackupSchema_ID Backup Schema
-	*/
-	public void setAD_BackupSchema_ID (int AD_BackupSchema_ID)
-	{
-		if (AD_BackupSchema_ID < 1)
-			set_ValueNoCheck (COLUMNNAME_AD_BackupSchema_ID, null);
-		else
-			set_ValueNoCheck (COLUMNNAME_AD_BackupSchema_ID, Integer.valueOf(AD_BackupSchema_ID));
-	}
-
-	/** Get Backup Schema.
-		@return Backup Schema	  */
-	public int getAD_BackupSchema_ID()
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_AD_BackupSchema_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
-	/** Set AD_BackupSchema_UU.
-		@param AD_BackupSchema_UU AD_BackupSchema_UU
-	*/
-	public void setAD_BackupSchema_UU (String AD_BackupSchema_UU)
-	{
-		set_ValueNoCheck (COLUMNNAME_AD_BackupSchema_UU, AD_BackupSchema_UU);
-	}
-
-	/** Get AD_BackupSchema_UU.
-		@return AD_BackupSchema_UU	  */
-	public String getAD_BackupSchema_UU()
-	{
-		return (String)get_Value(COLUMNNAME_AD_BackupSchema_UU);
-	}
 
 	/** Set Description.
 		@param Description Optional short description of the record
@@ -133,6 +97,42 @@ public class X_AD_BackupSchema extends PO implements I_AD_BackupSchema, I_Persis
 	public String getDescription()
 	{
 		return (String)get_Value(COLUMNNAME_Description);
+	}
+
+	/** Set Data Extractor Schema.
+		@param DEX_Schema_ID Data Extractor Schema
+	*/
+	public void setDEX_Schema_ID (int DEX_Schema_ID)
+	{
+		if (DEX_Schema_ID < 1)
+			set_ValueNoCheck (COLUMNNAME_DEX_Schema_ID, null);
+		else
+			set_ValueNoCheck (COLUMNNAME_DEX_Schema_ID, Integer.valueOf(DEX_Schema_ID));
+	}
+
+	/** Get Data Extractor Schema.
+		@return Data Extractor Schema	  */
+	public int getDEX_Schema_ID()
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_DEX_Schema_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set DEX_Schema_UU.
+		@param DEX_Schema_UU DEX_Schema_UU
+	*/
+	public void setDEX_Schema_UU (String DEX_Schema_UU)
+	{
+		set_Value (COLUMNNAME_DEX_Schema_UU, DEX_Schema_UU);
+	}
+
+	/** Get DEX_Schema_UU.
+		@return DEX_Schema_UU	  */
+	public String getDEX_Schema_UU()
+	{
+		return (String)get_Value(COLUMNNAME_DEX_Schema_UU);
 	}
 
 	/** Set Name.
