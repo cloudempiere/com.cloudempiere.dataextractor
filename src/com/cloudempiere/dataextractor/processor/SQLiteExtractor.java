@@ -1,4 +1,4 @@
-package com.cloudempiere.dataextractor.process;
+package com.cloudempiere.dataextractor.processor;
 
 import java.io.File;
 import java.sql.Connection;
@@ -11,36 +11,16 @@ import org.adempiere.base.annotation.Process;
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.PO;
 import org.compiere.model.Query;
-import org.compiere.process.ProcessInfoParameter;
-import org.compiere.process.SvrProcess;
 import org.sqlite.SQLiteDataSource;
 
 import com.cloudempiere.dataextractor.model.MDEXColumn;
-import com.cloudempiere.dataextractor.model.MDEXSchema;
 import com.cloudempiere.dataextractor.model.MDEXTable;
 
 
 @Process
-public class SQLiteExtractor extends SvrProcess {
+public class SQLiteExtractor extends BaseExtractor{
 
-	private int p_DEX_Schema_ID = 0;
-	
-	@Override
-	protected void prepare() {
-		ProcessInfoParameter[] paras = getParameter();
-		for (ProcessInfoParameter para : paras)
-		{
-			String name = para.getParameterName();
-			if ("DEX_Schema_ID".equals(name))
-				p_DEX_Schema_ID = para.getParameterAsInt();
-			
-		}
-	}
-
-	@Override
-	protected String doIt() throws Exception {
-		MDEXSchema schema = new MDEXSchema(getCtx(), p_DEX_Schema_ID, get_TrxName());
-		
+	public File generate() {
 		SQLiteDataSource ds = null;
 		File temp = null;
 
@@ -50,7 +30,7 @@ public class SQLiteExtractor extends SvrProcess {
             ds = new SQLiteDataSource();
     		ds.setUrl("jdbc:sqlite:"+temp.getAbsoluteFile());
         } catch ( Exception e ) {
-            return e.getMessage();
+            return null;
         }
 
         try {
@@ -89,7 +69,7 @@ public class SQLiteExtractor extends SvrProcess {
 				Statement stmt = conn.createStatement();
 				stmt.executeUpdate( tableSql );
 				   
-			   List<PO> list = new Query(getCtx(), table.getAD_Table().getTableName(), table.getWhereClause(), get_TrxName())
+			   List<PO> list = new Query(m_ctx, table.getAD_Table().getTableName(), table.getWhereClause(), null)
 					   .list();
 			
 				ArrayList<String> values = new ArrayList<String>();
@@ -111,11 +91,8 @@ public class SQLiteExtractor extends SvrProcess {
 		} catch ( SQLException e ) {
             throw new AdempiereException(e.getMessage());
 		}
-
-		processUI.download(temp);
-        
 		 
-        return "success";
+        return temp;
 	}
 
 }
