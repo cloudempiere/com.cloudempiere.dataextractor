@@ -2,6 +2,7 @@ package com.cloudempiere.dataextractor.process;
 
 import java.io.File;
 import org.adempiere.base.annotation.Process;
+import org.adempiere.exceptions.AdempiereException;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
 import com.cloudempiere.dataextractor.model.MDEXProcessor;
@@ -39,10 +40,10 @@ public class Extractor extends SvrProcess {
 			File file = extractor.generate();
 			processUI.download(file);
 		}catch(Exception ex) {
-			
+			throw new AdempiereException(ex.getMessage());
 		}
 		
-		return null;
+		return "success";
 	}
 
 }

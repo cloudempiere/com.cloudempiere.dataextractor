@@ -10,7 +10,6 @@ import java.util.List;
 import org.adempiere.base.annotation.Process;
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.PO;
-import org.compiere.model.Query;
 import org.sqlite.SQLiteDataSource;
 
 import com.cloudempiere.dataextractor.model.MDEXColumn;
@@ -69,8 +68,7 @@ public class SQLiteExtractor extends BaseExtractor{
 				Statement stmt = conn.createStatement();
 				stmt.executeUpdate( tableSql );
 				   
-			   List<PO> list = new Query(m_ctx, table.getAD_Table().getTableName(), table.getWhereClause(), null)
-					   .list();
+			   List<PO> list = getData(table.getAD_Table().getTableName(), table.getWhereClause());
 			
 				ArrayList<String> values = new ArrayList<String>();
 			    for(PO data : list) {
