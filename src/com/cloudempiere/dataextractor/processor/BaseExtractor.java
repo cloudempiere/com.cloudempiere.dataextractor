@@ -1,6 +1,9 @@
 package com.cloudempiere.dataextractor.processor;
 
 import java.io.File;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -8,8 +11,7 @@ import java.util.Properties;
 import org.adempiere.base.annotation.Process;
 import org.compiere.model.MColumn;
 import org.compiere.model.MTable;
-import org.compiere.model.PO;
-import org.compiere.model.Query;
+import org.compiere.util.DB;
 
 import com.cloudempiere.dataextractor.model.MDEXColumn;
 import com.cloudempiere.dataextractor.model.MDEXSchema;
@@ -27,14 +29,33 @@ public class BaseExtractor implements I_Extractor{
 		schema = new MDEXSchema(m_ctx, dex_Schema_ID, null);
 	}
 	
-	public List<PO> getData(String tableName, String whereClause){
-		Query query = new Query(m_ctx, tableName, whereClause, null);
+	public ResultSet getData(int AD_Client_ID, String tableName, String whereClause){
+		StringBuilder sql = new StringBuilder()
+				.append("SELECT * FROM "+tableName);
 		
-		if(schema.getAD_Client_ID()>0) {
-			query.setClient_ID();
+		
+		
+		if(AD_Client_ID>0) {
+			if(whereClause == null)
+				whereClause = " WHERE";
+			else
+				whereClause += " AND";
+				
+			whereClause += " AD_Client_ID="+AD_Client_ID;
+		}else if(whereClause != null){
+			whereClause = " WHERE " + whereClause;
 		}
 		
-		return query.list();
+		if(whereClause != null)
+			sql.append(whereClause);
+		
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = DB.prepareStatement(sql.toString(), null);
+			return pstmt.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
 	}
 	
 

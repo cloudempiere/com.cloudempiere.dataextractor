@@ -2,14 +2,13 @@ package com.cloudempiere.dataextractor.processor;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.adempiere.base.annotation.Process;
 import org.adempiere.exceptions.AdempiereException;
-import org.compiere.model.PO;
 import org.sqlite.SQLiteDataSource;
 
 import com.cloudempiere.dataextractor.model.MDEXColumn;
@@ -68,23 +67,29 @@ public class SQLiteExtractor extends BaseExtractor{
 				Statement stmt = conn.createStatement();
 				stmt.executeUpdate( tableSql );
 				   
-			   List<PO> list = getData(table.getAD_Table().getTableName(), table.getWhereClause());
-			
-				ArrayList<String> values = new ArrayList<String>();
-			    for(PO data : list) {
-			
-			    	ArrayList<String> value = new ArrayList<String>();
-			    	for(Column column : getColumns(table)) {
-			    		value.add(data.get_ValueAsString(column.getColumnName()));
-			    	}
-			    	
-			    	values.add("('"+ String.join("','", value) +"')");
-					
-				}
 				
-				dataSql += String.join(",", values);
-			
-			   stmt.executeUpdate( dataSql );
+				ResultSet rs = null;
+				try {
+				   rs = getData(table.getAD_Client_ID(), table.getAD_Table().getTableName(), table.getWhereClause());
+				
+					ArrayList<String> values = new ArrayList<String>();
+				    while(rs.next()) {
+				
+				    	ArrayList<String> value = new ArrayList<String>();
+				    	for(Column column : getColumns(table)) {
+				    		value.add(rs.getString(column.getColumnName()));
+				    	}
+				    	
+				    	values.add("('"+ String.join("','", value) +"')");
+						
+					}
+					
+					dataSql += String.join(",", values);
+				
+					stmt.executeUpdate( dataSql );
+				} catch (SQLException ex) {
+		            throw new AdempiereException(ex.getMessage());
+				}
 	        }
 		} catch ( SQLException e ) {
             throw new AdempiereException(e.getMessage());
