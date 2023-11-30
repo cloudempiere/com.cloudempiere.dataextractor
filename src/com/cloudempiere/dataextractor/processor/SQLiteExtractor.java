@@ -39,14 +39,14 @@ public class SQLiteExtractor extends BaseExtractor{
 	        	String columnInsertSql = "";
 	        	ArrayList<String> columns = new ArrayList<String>();
 	        	
-	        	for(MDEXColumn column : table.getColumns()) {
-	        		String columnName = column.getColumnName();
+	        	for(Column column : getColumns(table)) {
+	        		String columnName = column.getName();
 	        		
 	        		if(!columnSql.equals(""))
 	        			columnSql += ",";
 	        		
 	        		String type = "TEXT";
-	        		if(column.getDataType().equals(MDEXColumn.DATATYPE_Number))
+	        		if(column.getType().equals(MDEXColumn.DATATYPE_Number))
 	        			type = "NUMERIC";
 	        		
 	        		columnSql += "`" + columnName + "` " + type + " NULL";
@@ -74,8 +74,8 @@ public class SQLiteExtractor extends BaseExtractor{
 			    for(PO data : list) {
 			
 			    	ArrayList<String> value = new ArrayList<String>();
-			    	for(MDEXColumn column : table.getColumns()) {
-			    		value.add(data.get_ValueAsString(column.getAD_Column().getColumnName()));
+			    	for(Column column : getColumns(table)) {
+			    		value.add(data.get_ValueAsString(column.getColumnName()));
 			    	}
 			    	
 			    	values.add("('"+ String.join("','", value) +"')");
