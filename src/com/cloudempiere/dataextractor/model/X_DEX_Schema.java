@@ -31,7 +31,7 @@ public class X_DEX_Schema extends PO implements I_DEX_Schema, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20231127L;
+	private static final long serialVersionUID = 20231130L;
 
     /** Standard Constructor */
     public X_DEX_Schema (Properties ctx, int DEX_Schema_ID, String trxName)
@@ -97,6 +97,33 @@ public class X_DEX_Schema extends PO implements I_DEX_Schema, I_Persistent
 	public String getDescription()
 	{
 		return (String)get_Value(COLUMNNAME_Description);
+	}
+
+	public I_DEX_Processor getDEX_Processor() throws RuntimeException
+	{
+		return (I_DEX_Processor)MTable.get(getCtx(), I_DEX_Processor.Table_ID)
+			.getPO(getDEX_Processor_ID(), get_TrxName());
+	}
+
+	/** Set Data Extractor Processor.
+		@param DEX_Processor_ID Data Extractor Processor
+	*/
+	public void setDEX_Processor_ID (int DEX_Processor_ID)
+	{
+		if (DEX_Processor_ID < 1)
+			set_ValueNoCheck (COLUMNNAME_DEX_Processor_ID, null);
+		else
+			set_ValueNoCheck (COLUMNNAME_DEX_Processor_ID, Integer.valueOf(DEX_Processor_ID));
+	}
+
+	/** Get Data Extractor Processor.
+		@return Data Extractor Processor	  */
+	public int getDEX_Processor_ID()
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_DEX_Processor_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Data Extractor Schema.

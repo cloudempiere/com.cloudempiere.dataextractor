@@ -137,6 +137,32 @@ public interface I_DEX_Table
 	  */
 	public boolean isActive();
 
+    /** Column name LimitData */
+    public static final String COLUMNNAME_LimitData = "LimitData";
+
+	/** Set Limit Data.
+	  * Maximum Data
+	  */
+	public void setLimitData (int LimitData);
+
+	/** Get Limit Data.
+	  * Maximum Data
+	  */
+	public int getLimitData();
+
+    /** Column name OrderByClause */
+    public static final String COLUMNNAME_OrderByClause = "OrderByClause";
+
+	/** Set Sql ORDER BY.
+	  * Fully qualified ORDER BY clause
+	  */
+	public void setOrderByClause (String OrderByClause);
+
+	/** Get Sql ORDER BY.
+	  * Fully qualified ORDER BY clause
+	  */
+	public String getOrderByClause();
+
     /** Column name TableName */
     public static final String COLUMNNAME_TableName = "TableName";
 

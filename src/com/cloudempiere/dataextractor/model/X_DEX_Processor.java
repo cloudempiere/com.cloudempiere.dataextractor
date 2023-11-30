@@ -31,7 +31,7 @@ public class X_DEX_Processor extends PO implements I_DEX_Processor, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20231129L;
+	private static final long serialVersionUID = 20231130L;
 
     /** Standard Constructor */
     public X_DEX_Processor (Properties ctx, int DEX_Processor_ID, String trxName)

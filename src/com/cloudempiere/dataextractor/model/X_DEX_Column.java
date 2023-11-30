@@ -31,7 +31,7 @@ public class X_DEX_Column extends PO implements I_DEX_Column, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20231127L;
+	private static final long serialVersionUID = 20231130L;
 
     /** Standard Constructor */
     public X_DEX_Column (Properties ctx, int DEX_Column_ID, String trxName)
@@ -126,7 +126,7 @@ public class X_DEX_Column extends PO implements I_DEX_Column, I_Persistent
 	{
 		return (String)get_Value(COLUMNNAME_ColumnName);
 	}
-	
+
 	/** Number = N */
 	public static final String DATATYPE_Number = "N";
 	/** String = S */

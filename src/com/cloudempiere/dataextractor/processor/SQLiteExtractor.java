@@ -70,7 +70,7 @@ public class SQLiteExtractor extends BaseExtractor{
 				
 				ResultSet rs = null;
 				try {
-				   rs = getData(table.getAD_Client_ID(), table.getAD_Table().getTableName(), table.getWhereClause());
+				   rs = getData(table);
 				
 					ArrayList<String> values = new ArrayList<String>();
 				    while(rs.next()) {

@@ -31,7 +31,7 @@ public class X_DEX_Table extends PO implements I_DEX_Table, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20231127L;
+	private static final long serialVersionUID = 20231130L;
 
     /** Standard Constructor */
     public X_DEX_Table (Properties ctx, int DEX_Table_ID, String trxName)
@@ -174,6 +174,41 @@ public class X_DEX_Table extends PO implements I_DEX_Table, I_Persistent
 	public String getDEX_Table_UU()
 	{
 		return (String)get_Value(COLUMNNAME_DEX_Table_UU);
+	}
+
+	/** Set Limit Data.
+		@param LimitData Maximum Data
+	*/
+	public void setLimitData (int LimitData)
+	{
+		set_Value (COLUMNNAME_LimitData, Integer.valueOf(LimitData));
+	}
+
+	/** Get Limit Data.
+		@return Maximum Data
+	  */
+	public int getLimitData()
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_LimitData);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set Sql ORDER BY.
+		@param OrderByClause Fully qualified ORDER BY clause
+	*/
+	public void setOrderByClause (String OrderByClause)
+	{
+		set_Value (COLUMNNAME_OrderByClause, OrderByClause);
+	}
+
+	/** Get Sql ORDER BY.
+		@return Fully qualified ORDER BY clause
+	  */
+	public String getOrderByClause()
+	{
+		return (String)get_Value(COLUMNNAME_OrderByClause);
 	}
 
 	/** Set DB Table Name.

@@ -6,6 +6,7 @@ import org.adempiere.exceptions.AdempiereException;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
 import com.cloudempiere.dataextractor.model.MDEXProcessor;
+import com.cloudempiere.dataextractor.model.MDEXSchema;
 import com.cloudempiere.dataextractor.processor.BaseExtractor;
 
 
@@ -13,7 +14,6 @@ import com.cloudempiere.dataextractor.processor.BaseExtractor;
 public class Extractor extends SvrProcess {
 
 	private int p_DEX_Schema_ID = 0;
-	private int p_DEX_Processor_ID = 0;
 	
 	@Override
 	protected void prepare() {
@@ -23,15 +23,19 @@ public class Extractor extends SvrProcess {
 			String name = para.getParameterName();
 			if ("DEX_Schema_ID".equals(name))
 				p_DEX_Schema_ID = para.getParameterAsInt();
-			else if ("DEX_Processor_ID".equals(name))
-				p_DEX_Processor_ID = para.getParameterAsInt();
 			
 		}
 	}
 
 	@Override
 	protected String doIt() throws Exception {
-		MDEXProcessor processor = new MDEXProcessor(getCtx(), p_DEX_Processor_ID, get_TrxName());
+		
+		MDEXSchema schema = new MDEXSchema(getCtx(), p_DEX_Schema_ID, get_TrxName());
+		
+		if(schema.getDEX_Processor_ID()==0)
+			throw new AdempiereException("No processor defined for Schema "+schema.getName());
+			
+		MDEXProcessor processor = (MDEXProcessor) schema.getDEX_Processor();
 		
 		try{
 			Class<?> eclass = Class.forName(processor.getClassname());

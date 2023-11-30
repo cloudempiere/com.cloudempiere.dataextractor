@@ -29,25 +29,30 @@ public class BaseExtractor implements I_Extractor{
 		schema = new MDEXSchema(m_ctx, dex_Schema_ID, null);
 	}
 	
-	public ResultSet getData(int AD_Client_ID, String tableName, String whereClause){
+	public ResultSet getData(MDEXTable table){
 		StringBuilder sql = new StringBuilder()
-				.append("SELECT * FROM "+tableName);
+				.append("SELECT * FROM "+table.getAD_Table().getTableName());
 		
-		
-		
-		if(AD_Client_ID>0) {
+		String whereClause = table.getWhereClause();
+		if(table.getAD_Client_ID()>0) {
 			if(whereClause == null)
 				whereClause = " WHERE";
 			else
 				whereClause += " AND";
 				
-			whereClause += " AD_Client_ID="+AD_Client_ID;
+			whereClause += " AD_Client_ID="+table.getAD_Client_ID();
 		}else if(whereClause != null){
 			whereClause = " WHERE " + whereClause;
 		}
 		
 		if(whereClause != null)
 			sql.append(whereClause);
+		
+		if(table.getOrderByClause()!=null)
+			sql.append(" ORDER BY "+table.getOrderByClause());
+		
+		if(table.getLimitData()>0)
+			sql.append(" LIMIT "+table.getLimitData());
 		
 		PreparedStatement pstmt = null;
 		try {

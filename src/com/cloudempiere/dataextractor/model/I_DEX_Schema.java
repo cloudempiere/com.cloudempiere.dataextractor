@@ -93,6 +93,17 @@ public interface I_DEX_Schema
 	  */
 	public String getDescription();
 
+    /** Column name DEX_Processor_ID */
+    public static final String COLUMNNAME_DEX_Processor_ID = "DEX_Processor_ID";
+
+	/** Set Data Extractor Processor	  */
+	public void setDEX_Processor_ID (int DEX_Processor_ID);
+
+	/** Get Data Extractor Processor	  */
+	public int getDEX_Processor_ID();
+
+	public I_DEX_Processor getDEX_Processor() throws RuntimeException;
+
     /** Column name DEX_Schema_ID */
     public static final String COLUMNNAME_DEX_Schema_ID = "DEX_Schema_ID";
 
