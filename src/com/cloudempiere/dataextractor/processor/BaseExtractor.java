@@ -1,9 +1,6 @@
 package com.cloudempiere.dataextractor.processor;
 
 import java.io.File;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -11,7 +8,7 @@ import java.util.Properties;
 import org.adempiere.base.annotation.Process;
 import org.compiere.model.MColumn;
 import org.compiere.model.MTable;
-import org.compiere.util.DB;
+import org.compiere.util.CLogger;
 
 import com.cloudempiere.dataextractor.model.MDEXColumn;
 import com.cloudempiere.dataextractor.model.MDEXSchema;
@@ -23,13 +20,14 @@ public class BaseExtractor implements I_Extractor{
 
 	public MDEXSchema schema;
 	public Properties m_ctx;
+	protected CLogger log = CLogger.getCLogger (getClass());
 	
 	public void setSchema(Properties ctx, int dex_Schema_ID) {
 		m_ctx = ctx;
 		schema = new MDEXSchema(m_ctx, dex_Schema_ID, null);
 	}
 	
-	public ResultSet getData(MDEXTable table){
+	public String getSql(MDEXTable table){
 		StringBuilder sql = new StringBuilder()
 				.append("SELECT * FROM "+table.getAD_Table().getTableName());
 		
@@ -54,13 +52,7 @@ public class BaseExtractor implements I_Extractor{
 		if(table.getLimitData()>0)
 			sql.append(" LIMIT "+table.getLimitData());
 		
-		PreparedStatement pstmt = null;
-		try {
-			pstmt = DB.prepareStatement(sql.toString(), null);
-			return pstmt.executeQuery();
-		} catch (SQLException e) {
-			return null;
-		}
+		return sql.toString();
 	}
 	
 
