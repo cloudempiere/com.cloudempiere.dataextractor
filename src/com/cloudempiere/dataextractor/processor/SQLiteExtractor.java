@@ -32,6 +32,10 @@ public class SQLiteExtractor extends BaseExtractor{
     		ds.setUrl("jdbc:sqlite:"+temp.getAbsoluteFile());
         
 	        for(MDEXTable table : schema.getTables()) {
+	        	
+	        	if(!table.isActive())
+	        		continue;
+	        	
 	        	String columnSql = "";
 	        	String columnInsertSql = "";
 	        	ArrayList<String> columns = new ArrayList<String>();
