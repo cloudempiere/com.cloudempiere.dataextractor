@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.Query;
 import org.compiere.util.DB;
 
@@ -33,6 +34,22 @@ public class MDEXTable extends X_DEX_Table {
 				.list();
 	}
 	
+	protected boolean beforeSave(boolean newRecord)
+	{
+		if(getColumns().size()>0)
+			throw new AdempiereException("Columns already defined, please delete first");
+		
+		return true;
+	}
+
+	protected boolean afterSave (boolean newRecord, boolean success) {
+		MDEXSchema schema = (MDEXSchema) getDEX_Schema();
+		schema.setIsValid(false);
+		schema.saveEx();
+		
+		return success;
+	}
+	
 	public String getSql(){
 		return getSql(false);
 	}
@@ -50,18 +67,11 @@ public class MDEXTable extends X_DEX_Table {
 		
 		String whereClause = this.getWhereClause();
 		if(this.getAD_Client_ID()>0) {
-			if(whereClause == null)
-				whereClause = " WHERE";
-			else
-				whereClause += " AND";
-				
-			whereClause += " AD_Client_ID="+this.getAD_Client_ID();
-		}else if(whereClause != null){
-			whereClause = " WHERE " + whereClause;
+			whereClause += " AND AD_Client_ID="+this.getAD_Client_ID();
 		}
 		
 		if(whereClause != null)
-			sql.append(whereClause);
+			sql.append(" WHERE " + whereClause);
 		
 		if(this.getOrderByClause()!=null)
 			sql.append(" ORDER BY "+this.getOrderByClause());

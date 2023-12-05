@@ -21,5 +21,13 @@ public class MDEXColumn extends X_DEX_Column {
 		// TODO Auto-generated constructor stub
 	}
 
+	protected boolean afterSave (boolean newRecord, boolean success) {
+		MDEXSchema schema = (MDEXSchema) getDEX_Table().getDEX_Schema();
+		schema.setIsValid(false);
+		schema.saveEx();
+		
+		return success;
+	}
+
 
 }

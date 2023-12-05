@@ -42,6 +42,9 @@ public class ValidateSchema extends SvrProcess {
 		
 		List<String> tableNames = new ArrayList<String>();
 		for(MDEXTable table: schema.getTables()) {
+			if(!table.isActive())
+				continue;
+				
 			if(tableNames.contains(table.getTableName())) {
 				throw new AdempiereException("Table " + table.getTableName() + " is duplicate");
 			}
@@ -57,9 +60,6 @@ public class ValidateSchema extends SvrProcess {
 				}
 				
 				columnNames.add(column.getColumnName());
-				
-				column.setProcessed(true);
-				column.saveEx();
 			}
 			
 			PreparedStatement pstmt = null;
@@ -70,12 +70,8 @@ public class ValidateSchema extends SvrProcess {
 				throw new AdempiereException("table "+ table.getTableName() + " : invalid sql="+sql+". "+ex.getMessage());
 			}
 			
-			table.setProcessed(true);
-			table.saveEx();
-			
 		}
 		
-		schema.setProcessed(true);
 		schema.setIsValid(true);
 		schema.saveEx();
 		
