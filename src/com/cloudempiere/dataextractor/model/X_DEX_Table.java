@@ -31,7 +31,7 @@ public class X_DEX_Table extends PO implements I_DEX_Table, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20231130L;
+	private static final long serialVersionUID = 20231205L;
 
     /** Standard Constructor */
     public X_DEX_Table (Properties ctx, int DEX_Table_ID, String trxName)
@@ -209,6 +209,29 @@ public class X_DEX_Table extends PO implements I_DEX_Table, I_Persistent
 	public String getOrderByClause()
 	{
 		return (String)get_Value(COLUMNNAME_OrderByClause);
+	}
+
+	/** Set Processed.
+		@param Processed The document has been processed
+	*/
+	public void setProcessed (boolean Processed)
+	{
+		set_Value (COLUMNNAME_Processed, Boolean.valueOf(Processed));
+	}
+
+	/** Get Processed.
+		@return The document has been processed
+	  */
+	public boolean isProcessed()
+	{
+		Object oo = get_Value(COLUMNNAME_Processed);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
 	}
 
 	/** Set DB Table Name.

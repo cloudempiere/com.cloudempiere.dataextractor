@@ -37,10 +37,20 @@ public class Extractor extends SvrProcess {
 	protected String doIt() throws Exception {
 		
 		MDEXJob job =new MDEXJob(getCtx(), p_DEX_Job_ID, get_TrxName());
+		
+		if(job.getDEX_Status().equals(MDEXJob.DEX_STATUS_Done)) {
+			File file = new File(job.getLinkURL());
+			if(file.exists())
+				processUI.download(file);	
+			return "already generated";
+		}
+		
 		if(job.getStartTime()==null)
 			job.setStartTime(new Timestamp(System.currentTimeMillis()));
 		
 		MDEXSchema schema = (MDEXSchema) job.getDEX_Schema();
+		if(!schema.isValid())
+			throw new AdempiereException("Schema "+schema.getName() + " is not valid, validate it first");
 
 		for(MDEXTable table : schema.getTables()) {
 			if(!table.isActive())

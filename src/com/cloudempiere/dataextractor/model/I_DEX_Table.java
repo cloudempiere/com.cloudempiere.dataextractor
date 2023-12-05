@@ -163,6 +163,19 @@ public interface I_DEX_Table
 	  */
 	public String getOrderByClause();
 
+    /** Column name Processed */
+    public static final String COLUMNNAME_Processed = "Processed";
+
+	/** Set Processed.
+	  * The document has been processed
+	  */
+	public void setProcessed (boolean Processed);
+
+	/** Get Processed.
+	  * The document has been processed
+	  */
+	public boolean isProcessed();
+
     /** Column name TableName */
     public static final String COLUMNNAME_TableName = "TableName";
 

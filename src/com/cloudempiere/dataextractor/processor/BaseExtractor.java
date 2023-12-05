@@ -33,34 +33,6 @@ public class BaseExtractor implements I_Extractor{
 		schema = new MDEXSchema(m_ctx, dex_Schema_ID, null);
 	}
 	
-	public String getSql(MDEXTable table){
-		StringBuilder sql = new StringBuilder()
-				.append("SELECT * FROM "+table.getAD_Table().getTableName());
-		
-		String whereClause = table.getWhereClause();
-		if(table.getAD_Client_ID()>0) {
-			if(whereClause == null)
-				whereClause = " WHERE";
-			else
-				whereClause += " AND";
-				
-			whereClause += " AD_Client_ID="+table.getAD_Client_ID();
-		}else if(whereClause != null){
-			whereClause = " WHERE " + whereClause;
-		}
-		
-		if(whereClause != null)
-			sql.append(whereClause);
-		
-		if(table.getOrderByClause()!=null)
-			sql.append(" ORDER BY "+table.getOrderByClause());
-		
-		if(table.getLimitData()>0)
-			sql.append(" LIMIT "+table.getLimitData());
-		
-		return sql.toString();
-	}
-	
 
 	public List<Column> getColumns(MDEXTable table) {
 		List<Column> columns = new ArrayList<Column>();

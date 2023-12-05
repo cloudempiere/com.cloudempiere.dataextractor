@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.Properties;
 import org.compiere.model.*;
+import org.compiere.util.KeyNamePair;
 
 /** Generated Model for DEX_Job
  *  @author iDempiere (generated) 
@@ -32,7 +33,7 @@ public class X_DEX_Job extends PO implements I_DEX_Job, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20231204L;
+	private static final long serialVersionUID = 20231205L;
 
     /** Standard Constructor */
     public X_DEX_Job (Properties ctx, int DEX_Job_ID, String trxName)
@@ -168,6 +169,14 @@ public class X_DEX_Job extends PO implements I_DEX_Job, I_Persistent
 	{
 		return (String)get_Value(COLUMNNAME_DEX_Status);
 	}
+
+    /** Get Record ID/ColumnName
+        @return ID/ColumnName pair
+      */
+    public KeyNamePair getKeyNamePair() 
+    {
+        return new KeyNamePair(get_ID(), String.valueOf(getDEX_Status()));
+    }
 
 	/** Set Expire On.
 		@param Expiration Expire On

@@ -1,6 +1,8 @@
 package com.cloudempiere.dataextractor.model;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
@@ -30,13 +32,60 @@ public class MDEXTable extends X_DEX_Table {
 				.setParameters(getDEX_Table_ID())
 				.list();
 	}
+	
+	public String getSql(){
+		return getSql(false);
+	}
+	
+	public String getSql(boolean count){
+		StringBuilder sql = new StringBuilder()
+		.append("SELECT");
+		
+		if(count)
+			sql.append(" count(1) as total");
+		else
+			sql.append(" * ");
+			
+		sql.append(" FROM "+this.getAD_Table().getTableName());
+		
+		String whereClause = this.getWhereClause();
+		if(this.getAD_Client_ID()>0) {
+			if(whereClause == null)
+				whereClause = " WHERE";
+			else
+				whereClause += " AND";
+				
+			whereClause += " AD_Client_ID="+this.getAD_Client_ID();
+		}else if(whereClause != null){
+			whereClause = " WHERE " + whereClause;
+		}
+		
+		if(whereClause != null)
+			sql.append(whereClause);
+		
+		if(this.getOrderByClause()!=null)
+			sql.append(" ORDER BY "+this.getOrderByClause());
+		
+		if(this.getLimitData()>0)
+			sql.append(" LIMIT "+this.getLimitData());
+		
+		return sql.toString();
+	}
 
 	public int getTotalRows() {
-		String sql = "SELECT COUNT(1) FROM "+getAD_Table().getTableName();
-		if(getLimitData()>0)
-			sql += " LIMIT "+getLimitData();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			pstmt = DB.prepareStatement(getSql(), get_TrxName());
+			rs = pstmt.executeQuery();
+			if(rs.next())
+				count = rs.getInt("total");
+		}catch(SQLException ex) {
+			log.warning("failed count "+ex.getMessage());
+		}
 		
-		return DB.getSQLValue(get_TrxName(), sql);
+		return count;
 	}
 
 

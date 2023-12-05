@@ -31,7 +31,7 @@ public class X_DEX_Job_Table extends PO implements I_DEX_Job_Table, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20231204L;
+	private static final long serialVersionUID = 20231205L;
 
     /** Standard Constructor */
     public X_DEX_Job_Table (Properties ctx, int DEX_Job_Table_ID, String trxName)

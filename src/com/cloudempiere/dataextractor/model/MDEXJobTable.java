@@ -34,8 +34,9 @@ public class MDEXJobTable extends X_DEX_Job_Table {
 		if(jobTable==null) {
 			jobTable = new MDEXJobTable(job);
 			jobTable.setDEX_Table_ID(table.getDEX_Table_ID());
-			jobTable.saveEx();
 		}
+		jobTable.setTotalRows(table.getTotalRows());
+		jobTable.saveEx();
 		
 		return jobTable;
 	}

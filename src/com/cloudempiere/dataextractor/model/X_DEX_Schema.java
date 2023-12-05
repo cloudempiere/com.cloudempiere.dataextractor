@@ -31,7 +31,7 @@ public class X_DEX_Schema extends PO implements I_DEX_Schema, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20231130L;
+	private static final long serialVersionUID = 20231205L;
 
     /** Standard Constructor */
     public X_DEX_Schema (Properties ctx, int DEX_Schema_ID, String trxName)
@@ -111,9 +111,9 @@ public class X_DEX_Schema extends PO implements I_DEX_Schema, I_Persistent
 	public void setDEX_Processor_ID (int DEX_Processor_ID)
 	{
 		if (DEX_Processor_ID < 1)
-			set_ValueNoCheck (COLUMNNAME_DEX_Processor_ID, null);
+			set_Value (COLUMNNAME_DEX_Processor_ID, null);
 		else
-			set_ValueNoCheck (COLUMNNAME_DEX_Processor_ID, Integer.valueOf(DEX_Processor_ID));
+			set_Value (COLUMNNAME_DEX_Processor_ID, Integer.valueOf(DEX_Processor_ID));
 	}
 
 	/** Get Data Extractor Processor.
@@ -162,6 +162,29 @@ public class X_DEX_Schema extends PO implements I_DEX_Schema, I_Persistent
 		return (String)get_Value(COLUMNNAME_DEX_Schema_UU);
 	}
 
+	/** Set Valid.
+		@param IsValid Element is valid
+	*/
+	public void setIsValid (boolean IsValid)
+	{
+		set_Value (COLUMNNAME_IsValid, Boolean.valueOf(IsValid));
+	}
+
+	/** Get Valid.
+		@return Element is valid
+	  */
+	public boolean isValid()
+	{
+		Object oo = get_Value(COLUMNNAME_IsValid);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
 	/** Set Name.
 		@param Name Alphanumeric identifier of the entity
 	*/
@@ -176,6 +199,51 @@ public class X_DEX_Schema extends PO implements I_DEX_Schema, I_Persistent
 	public String getName()
 	{
 		return (String)get_Value(COLUMNNAME_Name);
+	}
+
+	/** Set Processed.
+		@param Processed The document has been processed
+	*/
+	public void setProcessed (boolean Processed)
+	{
+		set_Value (COLUMNNAME_Processed, Boolean.valueOf(Processed));
+	}
+
+	/** Get Processed.
+		@return The document has been processed
+	  */
+	public boolean isProcessed()
+	{
+		Object oo = get_Value(COLUMNNAME_Processed);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set Process Now.
+		@param Processing Process Now
+	*/
+	public void setProcessing (boolean Processing)
+	{
+		set_Value (COLUMNNAME_Processing, Boolean.valueOf(Processing));
+	}
+
+	/** Get Process Now.
+		@return Process Now	  */
+	public boolean isProcessing()
+	{
+		Object oo = get_Value(COLUMNNAME_Processing);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
 	}
 
 	/** Set Search Key.
