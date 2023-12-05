@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.compiere.model.Query;
+import org.compiere.util.DB;
 
 @org.adempiere.base.Model(table = "DEX_Table")
 public class MDEXTable extends X_DEX_Table {
@@ -28,6 +29,14 @@ public class MDEXTable extends X_DEX_Table {
 		return new Query(getCtx(), MDEXColumn.Table_Name, MDEXColumn.COLUMNNAME_DEX_Table_ID+"=?", get_TrxName())
 				.setParameters(getDEX_Table_ID())
 				.list();
+	}
+
+	public int getTotalRows() {
+		String sql = "SELECT COUNT(1) FROM "+getAD_Table().getTableName();
+		if(getLimitData()>0)
+			sql += " LIMIT "+getLimitData();
+		
+		return DB.getSQLValue(get_TrxName(), sql);
 	}
 
 
