@@ -73,7 +73,7 @@ public class MDEXTable extends X_DEX_Table {
 		if(whereClause != null)
 			sql.append(" WHERE " + whereClause);
 		
-		if(this.getOrderByClause()!=null)
+		if(!count && this.getOrderByClause()!=null)
 			sql.append(" ORDER BY "+this.getOrderByClause());
 		
 		if(this.getLimitData()>0)
@@ -87,12 +87,13 @@ public class MDEXTable extends X_DEX_Table {
 		ResultSet rs = null;
 		int count = 0;
 		try {
-			pstmt = DB.prepareStatement(getSql(), get_TrxName());
+			pstmt = DB.prepareStatement(getSql(true), get_TrxName());
 			rs = pstmt.executeQuery();
 			if(rs.next())
 				count = rs.getInt("total");
 		}catch(SQLException ex) {
 			log.warning("failed count "+ex.getMessage());
+			return -1;
 		}
 		
 		return count;

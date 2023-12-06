@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 import org.adempiere.base.annotation.Process;
 import org.adempiere.exceptions.AdempiereException;
+import org.compiere.model.Query;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
 
@@ -19,7 +20,7 @@ import com.cloudempiere.dataextractor.processor.BaseExtractor;
 @Process
 public class Extractor extends SvrProcess {
 
-	private int p_DEX_Job_ID = 0;
+	private int p_DEX_Schema_ID = 0;
 	
 	@Override
 	protected void prepare() {
@@ -27,8 +28,8 @@ public class Extractor extends SvrProcess {
 		for (ProcessInfoParameter para : paras)
 		{
 			String name = para.getParameterName();
-			if ("DEX_Job_ID".equals(name))
-				p_DEX_Job_ID = para.getParameterAsInt();
+			if ("DEX_Schema_ID".equals(name))
+				p_DEX_Schema_ID = para.getParameterAsInt();
 			
 		}
 	}
@@ -36,7 +37,25 @@ public class Extractor extends SvrProcess {
 	@Override
 	protected String doIt() throws Exception {
 		
-		MDEXJob job =new MDEXJob(getCtx(), p_DEX_Job_ID, get_TrxName());
+		MDEXSchema schema =new MDEXSchema(getCtx(), p_DEX_Schema_ID, get_TrxName());
+
+		if(!schema.isValid())
+			throw new AdempiereException("Schema "+schema.getName() + " is not valid, validate it first");
+
+		if(schema.getDEX_Processor_ID()==0)
+			throw new AdempiereException("No processor defined for Schema "+schema.getName());
+		
+		MDEXJob job = new Query(getCtx(), MDEXJob.Table_Name, "DEX_Schema_ID=? AND DEX_Status IN('N','P')", get_TrxName())
+				.setParameters(schema.getDEX_Schema_ID())
+				.first();
+		
+		if(job==null) {
+			job = new MDEXJob(getCtx(), 0, get_TrxName());
+			job.setDEX_Schema_ID(schema.getDEX_Schema_ID());
+			job.setStartTime(new Timestamp(System.currentTimeMillis()));
+			job.saveEx();
+			commitEx();
+		}
 		
 		if(job.getDEX_Status().equals(MDEXJob.DEX_STATUS_Done)) {
 			File file = new File(job.getLinkURL());
@@ -45,13 +64,6 @@ public class Extractor extends SvrProcess {
 			return "already generated";
 		}
 		
-		if(job.getStartTime()==null)
-			job.setStartTime(new Timestamp(System.currentTimeMillis()));
-		
-		MDEXSchema schema = (MDEXSchema) job.getDEX_Schema();
-		if(!schema.isValid())
-			throw new AdempiereException("Schema "+schema.getName() + " is not valid, validate it first");
-
 		for(MDEXTable table : schema.getTables()) {
 			if(!table.isActive())
 				continue;
@@ -59,9 +71,6 @@ public class Extractor extends SvrProcess {
 			MDEXJobTable.checkTable(job, table);
 		}
 		
-		if(schema.getDEX_Processor_ID()==0)
-			throw new AdempiereException("No processor defined for Schema "+schema.getName());
-			
 		MDEXProcessor processor = (MDEXProcessor) schema.getDEX_Processor();
 		
 		try{

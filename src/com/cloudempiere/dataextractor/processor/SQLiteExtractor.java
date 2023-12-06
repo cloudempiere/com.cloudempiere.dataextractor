@@ -86,7 +86,7 @@ public class SQLiteExtractor extends BaseExtractor{
     			
     			DB.close(countRs, countStmt);
     			
-    			if(table.getTotalRows()==totalRow) {
+    			if(jobTable.getTotalRows()==totalRow) {
     				jobTable.setProcessed(true);
     				jobTable.saveEx();
     				continue;
