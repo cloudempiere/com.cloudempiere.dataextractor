@@ -78,6 +78,7 @@ public class Extractor extends SvrProcess {
 			BaseExtractor extractor = (BaseExtractor) eclass.getDeclaredConstructor().newInstance();
 			extractor.setJob(job);
 			File file = extractor.generate();
+			job.setLinkURL(file.getAbsolutePath());
 			job.setFileName(file.getName());
 			job.setDEX_Status(MDEXJob.DEX_STATUS_Done);
 			job.saveEx();
