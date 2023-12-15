@@ -51,7 +51,7 @@ public class ValidateSchema extends SvrProcess {
 			
 			tableNames.add(table.getTableName());
 			
-			String sql = table.getSql(true);
+			String sql = "EXPLAIN " + table.getSql(true);
 
 			List<String> columnNames = new ArrayList<String>();
 			for(MDEXColumn column : table.getColumns()) {
