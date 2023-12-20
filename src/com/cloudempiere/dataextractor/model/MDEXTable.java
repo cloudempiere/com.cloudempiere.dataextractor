@@ -65,12 +65,15 @@ public class MDEXTable extends X_DEX_Table {
 			
 		sql.append(" FROM "+this.getAD_Table().getTableName());
 		
-		String whereClause = this.getWhereClause();
+		String whereClause = this.get_ValueAsString(COLUMNNAME_WhereClause);
 		if(this.getAD_Client_ID()>0) {
-			whereClause += " AND AD_Client_ID="+this.getAD_Client_ID();
+			if(whereClause.isEmpty())
+				whereClause += " AD_Client_ID="+this.getAD_Client_ID();
+			else
+				whereClause += " AND AD_Client_ID="+this.getAD_Client_ID();
 		}
 		
-		if(whereClause != null)
+		if(whereClause.isEmpty())
 			sql.append(" WHERE " + whereClause);
 		
 		if(!count && this.getOrderByClause()!=null)

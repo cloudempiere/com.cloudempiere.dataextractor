@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.adempiere.base.annotation.Process;
 import org.adempiere.exceptions.AdempiereException;
+import org.compiere.model.MTable;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
 import org.compiere.util.DB;
@@ -49,9 +50,15 @@ public class ValidateSchema extends SvrProcess {
 				throw new AdempiereException("Table " + table.getTableName() + " is duplicate");
 			}
 			
+			
 			tableNames.add(table.getTableName());
 			
 			String sql = "EXPLAIN " + table.getSql(true);
+			
+			MTable adTable = (MTable) table.getAD_Table();
+			if(adTable.getColumns(false).length==0){
+				throw new AdempiereException("Table " + adTable.getTableName() + ": no defined columns");
+			}
 
 			List<String> columnNames = new ArrayList<String>();
 			for(MDEXColumn column : table.getColumns()) {
