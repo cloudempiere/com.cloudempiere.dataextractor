@@ -36,7 +36,7 @@ public class MDEXTable extends X_DEX_Table {
 	
 	protected boolean beforeSave(boolean newRecord)
 	{
-		if(getColumns().size()>0)
+		if(is_ValueChanged(COLUMNNAME_AD_Table_ID) && getColumns().size()>0)
 			throw new AdempiereException("Columns already defined, please delete first");
 		
 		return true;
@@ -73,7 +73,7 @@ public class MDEXTable extends X_DEX_Table {
 				whereClause += " AND AD_Client_ID="+this.getAD_Client_ID();
 		}
 		
-		if(whereClause.isEmpty())
+		if(!whereClause.isEmpty())
 			sql.append(" WHERE " + whereClause);
 		
 		if(!count && this.getOrderByClause()!=null)
