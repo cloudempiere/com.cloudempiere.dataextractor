@@ -135,6 +135,8 @@ public class X_DEX_Column extends PO implements I_DEX_Column, I_Persistent
 	public static final String DATATYPE_Number = "N";
 	/** String = S */
 	public static final String DATATYPE_String = "S";
+	/** String = B */
+	public static final String DATATYPE_Blob = "B";
 	/** Set Data Type.
 		@param DataType Type of data
 	*/

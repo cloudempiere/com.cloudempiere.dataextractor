@@ -48,8 +48,10 @@ public class BaseExtractor implements I_Extractor{
 				continue;
 			
 			String type = MDEXColumn.DATATYPE_String;
-			if(DisplayType.isID(column.getAD_Reference_ID()) || DisplayType.isNumeric(column.getAD_Reference_ID()))
+			if((DisplayType.isID(column.getAD_Reference_ID()) && column.getColumnName().endsWith("_ID")) || DisplayType.isNumeric(column.getAD_Reference_ID()))
 				type = MDEXColumn.DATATYPE_Number;
+			else if(DisplayType.isLOB(column.getAD_Reference_ID()))
+				type = MDEXColumn.DATATYPE_Blob;
 			
 			columns.add(new Column(column.getColumnName(), column.getColumnName(), type));
 		}
