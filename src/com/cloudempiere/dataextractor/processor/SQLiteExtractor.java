@@ -56,6 +56,8 @@ public class SQLiteExtractor extends BaseExtractor{
 	        		String type = "TEXT";
 	        		if(column.getType().equals(MDEXColumn.DATATYPE_Number))
 	        			type = "NUMERIC";
+	        		else if(column.getType().equals(MDEXColumn.DATATYPE_Blob))
+		        			type = "BLOB";
 	        		
 	        		columnSql += "`" + columnName + "` " + type + " NULL";
 	
@@ -122,7 +124,12 @@ public class SQLiteExtractor extends BaseExtractor{
 	
 							int i = 1;
 					    	for(Column column : cols) {
-					    		dataStmt.setString(i++, rs.getString(column.getColumnName()));
+					    		if(column.getType().equals(MDEXColumn.DATATYPE_Number))
+						    		dataStmt.setDouble(i++, rs.getDouble(column.getColumnName()));
+					    		else if(column.getType().equals(MDEXColumn.DATATYPE_Blob))
+						    		dataStmt.setBytes(i++, rs.getBytes(column.getColumnName()));
+					    		else
+					    			dataStmt.setString(i++, rs.getString(column.getColumnName()));
 					    	}
 					    	dataStmt.execute();
 						} catch (SQLException ex) {
@@ -146,5 +153,4 @@ public class SQLiteExtractor extends BaseExtractor{
 		 
         return temp;
 	}
-
 }
