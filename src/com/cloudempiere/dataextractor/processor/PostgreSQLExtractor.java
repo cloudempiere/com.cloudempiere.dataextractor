@@ -15,7 +15,6 @@ import org.adempiere.base.annotation.Process;
 import org.adempiere.exceptions.AdempiereException;
 import org.adempiere.pipo2.Zipper;
 import org.apache.commons.codec.binary.Hex;
-import org.compiere.tools.FileUtil;
 import org.compiere.util.DB;
 
 import com.cloudempiere.dataextractor.model.MDEXColumn;
@@ -29,19 +28,20 @@ public class PostgreSQLExtractor extends BaseExtractor{
 	@Override
 	public File generate() {
 		try {
-			String folderName = createTmpDirectory().getAbsolutePath() + File.separator + schema.getName() + "_" + schema.getDEX_Schema_ID();
-			File folder = new File(folderName);
-			folder.mkdir();
+			String fileName = createTmpDirectory().getAbsolutePath() + File.separator + schema.getName() + "_" + schema.getDEX_Schema_ID();
+			File folder = new File(fileName);
+			if(!folder.exists())
+				folder.mkdir();
+			
+			File file = new File(fileName + File.separator + "backup.sql");
+
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF8"));
 			
 			for(MDEXJobTable jobTable : job.getTables()) {
     			if(jobTable.isProcessed())
     				continue;
     			
     			MDEXTable table = (MDEXTable) jobTable.getDEX_Table();
-    			
-				File file =  new File(folder.getAbsolutePath() + File.separator + table.getTableName() + ".sql");
-
-				BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF8"));
 				
 				List<Column> columns = getColumns(table);
 				
@@ -98,17 +98,17 @@ public class PostgreSQLExtractor extends BaseExtractor{
 				} finally {
 					DB.close(rs, pstmt);
 				}
-				out.close();
 				
 				jobTable.setProcessed(true);
 				jobTable.saveEx();
 			}
+
+			out.close();
 			
-			File zip = new File(folderName + ".zip");
+			File zip = new File(fileName + ".zip");
 			if(zip.exists())
 				zip.delete();
-			Zipper.zipFolder(folder, zip, "*");
-			FileUtil.deleteFolderRecursive(folder);
+			Zipper.zipFolder(folder, zip, "");
 			
 			return zip;
 		
